@@ -6,13 +6,12 @@ from .forms import TicketForm, TicketStatusForm, CommentForm
 
 
 def list_tickets(user):
-    user_roles = user.roles.values_list('name', flat=True)
-    if 'Admin' in user_roles:
+    user_roles = user.roles.values_list("name", flat=True)
+    if "Admin" in user_roles:
         return Ticket.objects.all()
     else:
         return Ticket.objects.filter(
-            Q(assigned_user=user) |
-            Q(assigned_group__members=user)
+            Q(assigned_user=user) | Q(assigned_group__members=user)
         ).distinct()
 
 

@@ -9,14 +9,16 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('groups', '0001_initial'),
+        ("groups", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='group',
-            name='members',
-            field=models.ManyToManyField(related_name='assigned_groups', to=settings.AUTH_USER_MODEL),
+            model_name="group",
+            name="members",
+            field=models.ManyToManyField(
+                related_name="assigned_groups", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

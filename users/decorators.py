@@ -15,5 +15,7 @@ def permission_required(permission_name):
             if not user.roles.filter(permissions=permission).exists():
                 raise PermissionDenied
             return view_func(request, *args, **kwargs)
+
         return _wrapped_view
+
     return decorator
