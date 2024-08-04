@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Ticket Detail{% endblock %}
+{% block content %}
+<h2>Ticket Detail</h2>
+<p><strong>ID:</strong> {{ ticket.id }}</p>
+<p><strong>Name:</strong> {{ ticket.name }}</p>
+<p>
+    <strong>Status:</strong> {{ ticket.status }}
+    {% if 'Analyst' in user_roles %}
+        <a class="btn btn-warning " href="{% url 'ticket_update_status' ticket.id %}">Update Status</a>
+    {% endif %}
+</p>
+
+<p><strong>Note:</strong> {{ ticket.note }}</p>
+<p><strong>Assigned User:</strong> {{ ticket.assigned_user }}</p>
+<p><strong>Assigned Group:</strong> {{ ticket.assigned_group }}</p>
+<h3>Comments</h3>
+<ul>
+{% for comment in comments %}
+  <li>
+    <strong>{{ comment.author }}</strong> ({{ comment.created_at }}):
+    {{ comment.text }}
+  </li>
+{% endfor %}
+</ul>
+
+<h3>Add a comment</h3>
+<form method="post">
+{% csrf_token %}
+{{ comment_form.as_p }}
+<button type="submit" class="btn btn-primary">Add Comment</button>
+</form>
+{% if has_permission %}
+    <a class="btn btn-warning " href="{% url 'ticket_edit' ticket.id %}">Edit</a>
+     <form action="{% url 'ticket_delete' ticket.id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger ">Delete</button>
+    </form>
+{% endif %}
+<a class="btn btn-secondary " href="{% url 'ticket_list' %}">Back to List</a>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Group List{% endblock %}
+{% block content %}
+<h2>Group List</h2>
+<a class="btn btn-primary mb-3" href="{% url 'group_add' %}">Add Group</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Members</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.members.all|join:", " }}</td>
+            <td>
+                <a class="btn btn-info btn-sm" href="{% url 'group_detail' group.id %}">View</a>
+                <a class="btn btn-warning btn-sm" href="{% url 'group_edit' group.id %}">Edit</a>
+                <form method="post" action="{% url 'group_delete' group.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

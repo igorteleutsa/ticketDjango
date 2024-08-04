@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}User List{% endblock %}
+{% block content %}
+<h2>User List</h2>
+<a class="btn btn-primary mb-3" href="{% url 'user_add' %}">Add User</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.roles.all|join:", " }}</td>
+            <td>
+                <a class="btn btn-info btn-sm" href="{% url 'user_detail' user.id %}">View</a>
+                <a class="btn btn-warning btn-sm" href="{% url 'user_edit' user.id %}">Edit</a>
+                <form method="post" action="{% url 'user_delete' user.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
