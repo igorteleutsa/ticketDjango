@@ -44,7 +44,7 @@ Make sure you have the following installed on your system:
     DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
 
     # Database settings
-    POSTGRES_DB=ticket_system
+    POSTGRES_NAME=ticket_system
     POSTGRES_USER=ticket_user
     POSTGRES_PASSWORD=ticket_password
     POSTGRES_HOST=db
